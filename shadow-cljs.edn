@@ -20,7 +20,9 @@
                              :removeStateValue calva.state/remove-state-value!
                              :js2cljs calva.js2cljs.converter/convert-bridge
                              :dart2clj calva.dartclojure/convert-bridge
-                             :readConfigEdn calva.read-config/config-edn->js-bridge}
+                             :readConfigEdn calva.read-config/config-edn->js-bridge
+                             :createReplOutputChan calva.repl-output/create-repl-output-channel!
+                             :appendLineToReplOutputChan calva.repl-output/append-line}
                  :output-to "out/cljs-lib/cljs-lib.js"}
                 :test
                 {:target    :node-test
