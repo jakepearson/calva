@@ -14,6 +14,7 @@ import { JackInTerminal, JackInTerminalOptions, createCommandLine } from './jack
 import * as liveShareSupport from '../live-share';
 import { getConfig } from '../config';
 import * as joyride from '../joyride';
+import { initReplOutputChan } from '../../out/cljs-lib/cljs-lib';
 
 let jackInPTY: JackInTerminal = undefined;
 let jackInTerminal: vscode.Terminal = undefined;
@@ -259,6 +260,7 @@ export async function jackIn(connectSequence: ReplConnectSequence, cb?: () => un
   await outputWindow.initResultsDoc();
   outputWindow.appendLine('; Jacking in...');
   await outputWindow.openResultsDoc();
+  initReplOutputChan();
 
   let projectConnectSequence: ReplConnectSequence = connectSequence;
   if (!projectConnectSequence) {

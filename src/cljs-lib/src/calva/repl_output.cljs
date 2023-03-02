@@ -15,14 +15,27 @@
     (reset! repl-output-channel
             (.. window (createOutputChannel "Calva REPL Output" "clojure")))))
 
-(defn append-line [content]
-  (.. ^js @repl-output-channel
-      (appendLine (if (pprint-enabled?)
-                    (with-out-str (pprint content))
-                    content))))
+(defn show-repl-output-channel! []
+  (when-let [^js output-channel @repl-output-channel]
+    (.. output-channel (show true))))
+
+(defn append-line [^String content]
+  (when-let [^js output-channel @repl-output-channel]
+    (.. output-channel (appendLine content))))
+
+
+(defn initialize-repl-output-channel!
+  "Creates the REPL output channel if it does not exist and shows it."
+  []
+  (create-repl-output-channel!)
+  (append-line "This is the Calva REPL output channel. You'll see REPL output here.")
+  (append-line "\n---\n")
+  (show-repl-output-channel!))
 
 (comment
+  (initialize-repl-output-channel!)
   (append-line big-map)
+  (with-out-str (pprint big-map))
   (.. vscode -workspace (getConfiguration "calva") -prettyPrintingOptions -enabled)
   (create-repl-output-channel!)
   (.. vscode -window (showInformationMessage "hello"))

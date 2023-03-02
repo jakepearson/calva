@@ -7,6 +7,7 @@ import * as connectSequences from './nrepl/connectSequence';
 import * as open from 'open';
 import * as outputWindow from './results-output/results-doc';
 import * as utilities from './utilities';
+import { initReplOutputChan } from '../out/cljs-lib/cljs-lib';
 
 const JOYRIDE_NREPL_START_API_VERSION = '0.0.5';
 
@@ -51,6 +52,7 @@ export async function prepareForJackingOrConnect() {
   });
   await outputWindow.initResultsDoc();
   await outputWindow.openResultsDoc();
+  initReplOutputChan();
   return state.getProjectRootLocal();
 }
 
