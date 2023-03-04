@@ -4,6 +4,7 @@
 
 (defonce repl-output-channel (atom nil))
 
+;; Dummy comment
 (defn pprint-enabled? []
   (.. vscode -workspace (getConfiguration "calva") -prettyPrintingOptions -enabled))
 
