@@ -4,6 +4,19 @@ Changes to Calva.
 
 ## [Unreleased]
 
+- Bump bundled deps.clj to v1.11.1.1252
+- Fix: [Calva does not gracefully handle when clojure-lsp cannot be downloaded](https://github.com/BetterThanTomorrow/calva/issues/2064)
+
+## [2.0.335] - 2023-02-25
+
+- Reintroducing features in v2.0.333, except the fallback clojure-lsp server, see #2090 for details
+- Fix: [Monorepo setup working on v2.0.333, broken on v2.0.334](https://github.com/BetterThanTomorrow/calva/issues/2088)
+- Fix: [Calva v2.0.333 has startup and repl issues on Windows](https://github.com/BetterThanTomorrow/calva/issues/2087)
+
+## [2.0.334] - 2023-02-22
+
+- Rollback of 2.0.333, first part of: [Calva v2.0.333 is not working for me in VSCode Insiders on Windows 11](https://github.com/BetterThanTomorrow/calva/issues/2087)
+
 ## [2.0.333] - 2023-02-21
 
 - Fix: [Multiple LSP processes automatically running, broken LSP features in multi-root workspaces](https://github.com/BetterThanTomorrow/calva/issues/2065)

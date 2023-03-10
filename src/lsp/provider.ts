@@ -100,17 +100,18 @@ export const createClientProvider = (params: CreateClientProviderParams) => {
     status_bar.updateStatusBar(status_bar_item, client.status);
   };
 
-  let lsp_server_path: Promise<string | void> | undefined = undefined;
-  const provisionClient = async (uri: vscode.Uri, id = uri.path) => {
+  let lsp_server_path: string;
+  const provisionClient = async (uri: vscode.Uri, id = uri.fsPath) => {
     if (lsp_server_path === undefined) {
-      lsp_server_path = lsp_client.ensureLSPServer(params.context).catch((err) => {
-        console.error('Failed to download lsp server', err);
+      try {
+        lsp_server_path = await lsp_client.ensureLSPServer(params.context);
+      } catch (err) {
+        void vscode.window.showErrorMessage(`Failed to download clojure-lsp server. ${err}`);
         return;
-      });
+      }
     }
 
-    const server_path = await lsp_server_path;
-    if (!server_path) {
+    if (!lsp_server_path) {
       console.error('Server path could not be resolved');
       return;
     }
@@ -122,7 +123,7 @@ export const createClientProvider = (params: CreateClientProviderParams) => {
 
     console.log(`Creating new LSP client using ${uri.path} as the project root`);
     const client = lsp_client.createClient({
-      lsp_server_path: server_path,
+      lsp_server_path,
       id,
       uri,
     });
@@ -150,12 +151,20 @@ export const createClientProvider = (params: CreateClientProviderParams) => {
     });
   };
 
+  /**
+   * Provision a fallback lsp client in an OS temp directory to service any clojure files not part of any opened
+   * valid clojure projects.
+   *
+   * This logic has been disabled for now as it does not function correctly on Windows. This can be re-enabled
+   * once support for windows has been added.
+   */
   const provisionFallbackClient = async () => {
+    return;
     const dir = path.join(os.tmpdir(), 'calva-clojure-lsp');
     await fs.mkdir(dir, {
       recursive: true,
     });
-    return provisionClient(vscode.Uri.parse(dir), api.FALLBACK_CLIENT_ID);
+    return provisionClient(vscode.Uri.file(dir), api.FALLBACK_CLIENT_ID);
   };
 
   const provisionClientForOpenedDocument = async (document: vscode.TextDocument) => {
@@ -181,10 +190,16 @@ export const createClientProvider = (params: CreateClientProviderParams) => {
 
   const provisionClientInFirstWorkspaceRoot = async () => {
     const folder = vscode.workspace.workspaceFolders[0];
-    if (folder && (await project_utils.isValidClojureProject(folder.uri))) {
-      return provisionClient(folder.uri);
+    if (!folder) {
+      return;
     }
-    return provisionFallbackClient();
+    return provisionClient(folder.uri);
+
+    // TODO: Rather provision fallback client if not a valid clojure project:
+    // if (folder && (await project_utils.isValidClojureProject(folder.uri))) {
+    //   return provisionClient(folder.uri);
+    // }
+    // return provisionFallbackClient();
   };
 
   return {
