@@ -16,11 +16,11 @@
   [config]
   (jsify (update-config-edn config)))
 
-(defn ^:export config-edn->js-bridge
+(defn ^:export config-edn-to-js-bridge
   [config]
   (config-edn->js config))
 
-(comment 
+(comment
   (parse/parse-clj-edn "{:foo (str \"**EDN edn current-form**: \" $current-form)}")
   (update-config-edn "{:customREPLCommandSnippets 
                       [{:name \"foo\"
