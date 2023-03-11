@@ -14,6 +14,7 @@
                            calva.dartclojure
                            calva.read-config]
                  :output-dir "node_modules/shadow-cljs"
+                 ;; TODO: Add ^:export metadata to all these functions so they aren't mangled during advanced compilation
                  #_#_:exports   {:formatText calva.fmt.formatter/format-text-bridge
                                  :formatTextAtRange calva.fmt.formatter/format-text-at-range-bridge
                                  :formatTextAtIdx calva.fmt.formatter/format-text-at-idx-bridge
