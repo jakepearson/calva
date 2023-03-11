@@ -16,7 +16,7 @@
                  :exception {:name (.-name e)
                              :message (.-message e)}}}))))
 
-(defn convert-bridge [js-string]
+(defn convert-js-to-cljs [js-string]
   (convert js-string))
 
 (comment
@@ -46,5 +46,4 @@ MongoClient.connect(url, function(err, db) {
                  :parse {:interpose "\n\n"}
                  :width 60
                  :pair {:nl-separator? true}}
-   :format-opts {:debug (atom nil)}}))
-  )
+   :format-opts {:debug (atom nil)}})))

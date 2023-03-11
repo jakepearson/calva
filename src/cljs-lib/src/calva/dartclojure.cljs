@@ -10,7 +10,7 @@
                :exception {:name (.-name e)
                            :message (.-message e)}}})))
 
-(defn convert-bridge [dart-string]
+(defn convert-dart-to-cljs [dart-string]
   (convert dart-string))
 
 (comment

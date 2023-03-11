@@ -31,8 +31,8 @@
                                  :getStateValue calva.state/get-state-value
                                  :getState calva.state/get-state
                                  :removeStateValue calva.state/remove-state-value!
-                                 :js2cljs calva.js2cljs.converter/convert-bridge
-                                 :dart2clj calva.dartclojure/convert-bridge
+                                 :js2cljs calva.js2cljs.converter/convert-js-to-cljs
+                                 :dart2clj calva.dartclojure/convert-dart-to-cljs
                                  :readConfigEdn calva.read-config/config-edn-to-js-bridge}}
                 :test
                 {:target    :node-test

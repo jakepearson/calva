@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
-import * as calvaLib from '../out/cljs-lib/cljs-lib';
+import { jsify } from 'shadow-cljs/calva.js_utils';
+import { convert_js_to_cljs } from 'shadow-cljs/calva.js2cljs.converter';
+import { convert_dart_to_cljs } from 'shadow-cljs/calva.dartclojure';
 
 type ConverterResult = {
   result: string;
@@ -38,7 +40,7 @@ async function convert(convertFn: ConvertFn) {
       ? new vscode.Range(doc.positionAt(0), doc.positionAt(Infinity))
       : new vscode.Range(selection.start, selection.end)
   );
-  const results: ConverterResult | ConverterInvalidResult = calvaLib.jsify(convertFn(code));
+  const results: ConverterResult | ConverterInvalidResult = jsify(convertFn(code));
   if (isConverterResult(results)) {
     await vscode.workspace
       .openTextDocument({ language: 'clojure', content: results.result })
@@ -57,9 +59,9 @@ async function convert(convertFn: ConvertFn) {
 }
 
 export async function js2cljs() {
-  return convert(calvaLib.js2cljs);
+  return convert(convert_js_to_cljs);
 }
 
 export async function dart2clj() {
-  return convert(calvaLib.dart2clj);
+  return convert(convert_dart_to_cljs);
 }
