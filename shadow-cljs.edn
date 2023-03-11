@@ -27,7 +27,7 @@
                                  :prettyPrint calva.pprint.printer/pretty-print-js-bridge
                                  :parseEdn calva.parse/parse-edn-js-bridge
                                  :parseForms calva.parse/parse-forms-js-bridge
-                                 :setStateValue calva.state/set-state-value!
+                                 :setStateValue calva.state/set-state-value
                                  :getStateValue calva.state/get-state-value
                                  :getState calva.state/get-state
                                  :removeStateValue calva.state/remove-state-value!

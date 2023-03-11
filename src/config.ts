@@ -5,7 +5,7 @@ import * as path from 'path';
 import { customREPLCommandSnippet } from './evaluate';
 import { ReplConnectSequence } from './nrepl/connectSequence';
 import { PrettyPrintingOptions } from './printer';
-import { readConfigEdn } from '../out/cljs-lib/cljs-lib';
+import { config_edn_to_js_bridge } from 'shadow-cljs/calva.read_config';
 import * as state from './state';
 import _ = require('lodash');
 import { isDefined } from './utilities';
@@ -128,7 +128,7 @@ function mergeSnippets(
  */
 function addEdnConfig(data: string) {
   try {
-    const parsed = readConfigEdn(data);
+    const parsed = config_edn_to_js_bridge(data);
     const old = state.getProjectConfig();
 
     state.setProjectConfig({
