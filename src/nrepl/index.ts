@@ -592,6 +592,7 @@ export class NReplSession {
     });
   }
 
+  // Docs for the var-query options: https://cljdoc.org/d/cider/orchard/0.11.0/api/orchard.query?q=var-query#vars
   testVarQuery(query: cider.VarQuery): Promise<cider.TestResults> {
     return new Promise<any>((resolve, reject) => {
       const id = this.client.nextId;
